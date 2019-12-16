@@ -37,8 +37,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         RESET,   KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  _______,          EEP_RST,
         _______,     RGB_TOG, RGB_MOD, RGB_HUI, RGB_HUD, RGB_SAI, RGB_SAD, RGB_VAI, RGB_VAD, _______, _______, _______, _______, _______,      _______,
         _______,       ESC_HUI, ESC_SAI, ESC_VAI, BDG_HUI, BDG_SAI, BDG_VAI, UGL_HUI, UGL_SAI, UGL_VAI, _______, _______, _______,             _______,
-        _______,            ESC_HUD, ESC_SAD, ESC_VAD, BDG_HUD, BDG_SAD, BDG_VAD, UGL_HUD, UGL_SAD, UGL_VAD, _______, _______,        _______, _______,
-        _______,   _______,   _______,                      _______,                              _______,   _______,        _______, _______, _______
+        _______,            ESC_HUD, ESC_SAD, ESC_VAD, BDG_HUD, BDG_SAD, BDG_VAD, UGL_HUD, UGL_SAD, UGL_VAD, _______, _______,        CYC_LED, _______,
+        _______,   _______,   _______,                      _______,                              _______,   _______,        TOG_ESC, TOG_BDG, TOG_UGL
     ),
 
 };
