@@ -243,7 +243,7 @@ void setup_led_range_control(void) {
             // Try and get a valid colour configuration out of the EEPROM space we use
             read_led_config();
         } else {
-            // Its invalid, so write a fresh one
+            // It's invalid, so write a fresh one
             set_magic_value();
             clear_led_config();
             save_led_config();
