@@ -17,7 +17,7 @@
 #include "led_control.h"
 
 void keyboard_post_init_user(void) {
-    wait_ms(200); // workaround a bug somewhere in TMK that stops user init happening at the right time in the startup sequence
+    wait_ms(250); // workaround a bug somewhere in TMK that stops user init happening at the right time in the startup sequence
     setup_led_range_control();
 }
 
