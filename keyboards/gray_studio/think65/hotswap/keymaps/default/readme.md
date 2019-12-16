@@ -1,1 +1,1 @@
-# The default keymap for think65
+# The default keymap for Think6.5
