@@ -28,6 +28,10 @@
 #define THINK65_LED_RANGE_BADGE               4, 8
 #define THINK65_LED_RANGE_UNDERGLOW           8, 22
 #define THINK65_LED_RANGE_ALL                 0, 22
+#define THINK65_LED_RANGE_BADGE_LED1          4, 5
+#define THINK65_LED_RANGE_BADGE_LED2          5, 6
+#define THINK65_LED_RANGE_BADGE_LED3          6, 7
+#define THINK65_LED_RANGE_BADGE_LED4          7, 8
 
 // Turn the LEDs off by setting HSV to 0, 0, 0
 #define THINK65_LEDS_OFF                      0, 0, 0
@@ -62,6 +66,12 @@
 #define THINK65_LED_EEPROM_H_BYTE             0
 #define THINK65_LED_EEPROM_S_BYTE             1
 #define THINK65_LED_EEPROM_V_BYTE             2
+
+// Define what colours to set the invidual badge LEDs for lock state
+// Look inside quantum/rgblight_list.h for inspiration
+#define THINK65_LED_CAPSLOCK_COLOR            HSV_GOLD
+#define THINK65_LED_NUMLOCK_COLOR             HSV_AZURE
+#define THINK65_LED_SCRLOCK_COLOR             HSV_CORAL
 
 // setup the user EEPROM space we need
 typedef union {
@@ -108,6 +118,9 @@ void set_led_state(unsigned int led_range);
 void clear_led_state(unsigned int led_range);
 void cycle_led_state(void);
 void apply_led_state(void);
+
+// Badge LEDs as lock LEDs
+void update_badge_as_lock(void);
 
 // Setup some keycodes to control cycling and range toggling
 enum think65_led_keycodes {

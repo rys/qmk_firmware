@@ -24,11 +24,10 @@ void keyboard_post_init_user(void) {
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     switch (keycode) {
         case KC_CAPS:
+        case KC_SLCK:
+        case KC_NLCK:
             if (!record->event.pressed) {
-                // connect capslock LED control to the badge LEDs
-                host_keyboard_led_state().caps_lock ? set_led_state(THINK65_LED_BADGE_RANGE_BIT) : clear_led_state(THINK65_LED_BADGE_RANGE_BIT);
-                apply_led_state();
-                eeconfig_update_user(user_config.raw);
+                update_badge_as_lock();
             }
             break;
         default:

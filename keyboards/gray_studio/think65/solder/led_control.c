@@ -233,6 +233,17 @@ void apply_led_state(void) {
     print_led_config();
 }
 
+void update_badge_as_lock(void) {
+    host_keyboard_led_state().caps_lock   ? rgblight_sethsv_range(THINK65_LED_CAPSLOCK_COLOR, THINK65_LED_RANGE_BADGE_LED1)
+                                          : rgblight_sethsv_range(THINK65_LEDS_OFF, THINK65_LED_RANGE_BADGE_LED1);
+
+    host_keyboard_led_state().num_lock    ? rgblight_sethsv_range(THINK65_LED_NUMLOCK_COLOR,  THINK65_LED_RANGE_BADGE_LED2)
+                                          : rgblight_sethsv_range(THINK65_LEDS_OFF, THINK65_LED_RANGE_BADGE_LED2);
+
+    host_keyboard_led_state().scroll_lock ? rgblight_sethsv_range(THINK65_LED_SCRLOCK_COLOR,  THINK65_LED_RANGE_BADGE_LED3)
+                                          : rgblight_sethsv_range(THINK65_LEDS_OFF, THINK65_LED_RANGE_BADGE_LED3);
+}
+
 void setup_led_range_control(void) {
     user_config.raw = eeconfig_read_user();
 
