@@ -22,6 +22,17 @@ void keyboard_post_init_user(void) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    switch (keycode) {
+        case KC_CAPS:
+        case KC_SLCK:
+        case KC_NLCK:
+            if (!record->event.pressed) {
+                update_badge_as_lock();
+            }
+            break;
+        default:
+            break;
+    }
     return process_led_range_control_codes(keycode, record);
 }
 
