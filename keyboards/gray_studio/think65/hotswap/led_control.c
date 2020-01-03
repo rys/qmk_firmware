@@ -54,7 +54,7 @@ void print_led_config(void) {
             uprintf("LED state %d -> Esc + Badge\n", user_config.current_led_state);
             break;
         case THINK65_LED_STATE_ESC_AND_UNDERGLOW:
-            uprintf("LED state %d -> Esc + Underglow\n", user_config.current_led_state);
+            uprintf("LED state %d -> Esc + Underglow (only affects static)\n", user_config.current_led_state);
             break;
         case THINK65_LED_STATE_BADGE_AND_UNDERGLOW:
             uprintf("LED state %d -> Badge + Underglow\n", user_config.current_led_state);
