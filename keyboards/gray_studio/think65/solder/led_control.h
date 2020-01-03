@@ -29,6 +29,18 @@
 #define THINK65_LED_RANGE_UNDERGLOW           8, 22
 #define THINK65_LED_RANGE_ALL                 0, 22
 
+// Define the LED positions and counts for the dynamic lighting API
+#define THINK65_LED_ESC_POS                   0
+#define THINK65_LED_ESC_NUM                   4
+#define THINK65_LED_BADGE_POS                 4
+#define THINK65_LED_BADGE_NUM                 4
+#define THINK65_LED_UNDERGLOW_POS             8
+#define THINK65_LED_UNDERGLOW_NUM             14
+#define THINK65_LED_ESC_BADGE_POS             THINK65_LED_ESC_POS
+#define THINK65_LED_ESC_BADGE_NUM             (THINK65_LED_ESC_NUM + THINK65_LED_BADGE_NUM)
+#define THINK65_LED_BADGE_UNDERGLOW_POS       THINK65_LED_BADGE_POS
+#define THINK65_LED_BADGE_UNDERGLOW_NUM       (THINK65_LED_BADGE_NUM + THINK65_LED_UNDERGLOW_NUM)
+
 // Turn the LEDs off by setting HSV to 0, 0, 0
 #define THINK65_LEDS_OFF                      0, 0, 0
 
@@ -87,6 +99,9 @@ typedef struct Think65_LED_Config {
 } Think65_LED_Config;
 
 Think65_LED_Config think65_led_config;
+
+// Check if dynamic lighting is enabled
+bool static_lighting(void);
 
 // Range control setup
 void setup_led_range_control(void);

@@ -17,6 +17,10 @@
 #include "tmk_core/common/eeprom.h"
 #include "led_control.h"
 
+bool static_lighting(void) {
+    return rgblight_get_mode() == RGBLIGHT_MODE_STATIC_LIGHT;
+}
+
 bool is_magic_valid(void) {
     return eeprom_read_byte((void*)THINK65_LED_EEPROM_BASE_ADDR) == THINK65_LED_EEPROM_MAGIC_BYTE;
 }
@@ -32,14 +36,44 @@ uint8_t read_magic_value(void) {
 void print_led_config(void) {
 #ifdef CONSOLE_ENABLE
     uprintf("Magic     %d\n", read_magic_value());
-    uprintf("LED state %d\n", user_config.current_led_state);
+
+    switch (user_config.current_led_state) {
+        case THINK65_LED_STATE_OFF:
+            uprintf("LED state %d -> Off\n", user_config.current_led_state);
+            break;
+        case THINK65_LED_STATE_ESC:
+            uprintf("LED state %d -> Esc\n", user_config.current_led_state);
+            break;
+        case THINK65_LED_STATE_BADGE:
+            uprintf("LED state %d -> Badge\n", user_config.current_led_state);
+            break;
+        case THINK65_LED_STATE_UNDERGLOW:
+            uprintf("LED state %d -> Underglow\n", user_config.current_led_state);
+            break;
+        case THINK65_LED_STATE_ESC_AND_BADGE:
+            uprintf("LED state %d -> Esc + Badge\n", user_config.current_led_state);
+            break;
+        case THINK65_LED_STATE_ESC_AND_UNDERGLOW:
+            uprintf("LED state %d -> Esc + Underglow\n", user_config.current_led_state);
+            break;
+        case THINK65_LED_STATE_BADGE_AND_UNDERGLOW:
+            uprintf("LED state %d -> Badge + Underglow\n", user_config.current_led_state);
+            break;
+        case THINK65_LED_STATE_ON:
+            uprintf("LED state %d -> All\n", user_config.current_led_state);
+            break;
+        default:
+            uprintf("LED state %d -> Unknown!\n", user_config.current_led_state);
+            break;
+    }
+
     uprintf("Escape    hsv(%d, %d, %d)\n", think65_led_config.esc_h,
                                            think65_led_config.esc_s,
                                            think65_led_config.esc_v);
     uprintf("Badge     hsv(%d, %d, %d)\n", think65_led_config.badge_h,
                                            think65_led_config.badge_s,
                                            think65_led_config.badge_v);
-    uprintf("Underglow hsv(%d, %d, %d)\n", think65_led_config.underglow_h,
+    uprintf("Underglow hsv(%d, %d, %d)\n\n", think65_led_config.underglow_h,
                                            think65_led_config.underglow_s,
                                            think65_led_config.underglow_v);
 #endif
@@ -189,42 +223,73 @@ void apply_led_state(void) {
     // Set the RGB ranges based on the current state
     switch(user_config.current_led_state) {
         case THINK65_LED_STATE_OFF:
-            rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_ALL);
+            if (static_lighting()) {
+                rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_ALL);
+            } else {
+                rgblight_disable();
+            }
             break;
         case THINK65_LED_STATE_ESC:
-            rgblight_sethsv_range(esc_h, esc_s, esc_v, THINK65_LED_RANGE_ESC);
+            if (static_lighting()) {
+                rgblight_sethsv_range(esc_h, esc_s, esc_v, THINK65_LED_RANGE_ESC);
+            } else {
+                rgblight_set_effect_range(THINK65_LED_ESC_POS, THINK65_LED_ESC_NUM);
+            }
             rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_BADGE);
             rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_UNDERGLOW);
             break;
         case THINK65_LED_STATE_BADGE:
+            if (static_lighting()) {
+                rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
+            } else {
+                rgblight_set_effect_range(THINK65_LED_BADGE_POS, THINK65_LED_BADGE_NUM);
+            }
             rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_ESC);
-            rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
             rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_UNDERGLOW);
             break;
         case THINK65_LED_STATE_UNDERGLOW:
+            if (static_lighting()) {
+                rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
+            } else {
+                rgblight_set_effect_range(THINK65_LED_UNDERGLOW_POS, THINK65_LED_UNDERGLOW_NUM);
+            }
             rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_ESC);
             rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_BADGE);
-            rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
             break;
         case THINK65_LED_STATE_ESC_AND_BADGE:
-            rgblight_sethsv_range(esc_h, esc_s, esc_v, THINK65_LED_RANGE_ESC);
-            rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
+            if (static_lighting()) {
+                rgblight_sethsv_range(esc_h, esc_s, esc_v, THINK65_LED_RANGE_ESC);
+                rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
+            } else {
+                rgblight_set_effect_range(THINK65_LED_ESC_BADGE_POS, THINK65_LED_ESC_BADGE_NUM);
+            }
             rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_UNDERGLOW);
             break;
         case THINK65_LED_STATE_ESC_AND_UNDERGLOW:
-            rgblight_sethsv_range(esc_h, esc_s, esc_v, THINK65_LED_RANGE_ESC);
-            rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_BADGE);
-            rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
+            if (static_lighting()) {
+                rgblight_sethsv_range(esc_h, esc_s, esc_v, THINK65_LED_RANGE_ESC);
+                rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_BADGE);
+                rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
+            }
             break;
         case THINK65_LED_STATE_BADGE_AND_UNDERGLOW:
+            if (static_lighting()) {
+                rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
+                rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
+            } else {
+                rgblight_set_effect_range(THINK65_LED_BADGE_UNDERGLOW_POS, THINK65_LED_BADGE_UNDERGLOW_NUM);
+            }
             rgblight_sethsv_range(THINK65_LEDS_OFF,    THINK65_LED_RANGE_ESC);
-            rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
-            rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
             break;
         case THINK65_LED_STATE_ON:
-            rgblight_sethsv_range(esc_h, esc_s, esc_v, THINK65_LED_RANGE_ESC);
-            rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
-            rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
+            if (static_lighting()) {
+                rgblight_sethsv_range(esc_h, esc_s, esc_v, THINK65_LED_RANGE_ESC);
+                rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
+                rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
+            } else {
+                rgblight_enable();
+                rgblight_set_effect_range(THINK65_LED_RANGE_ALL);
+            }
             break;
         default:
             break;
