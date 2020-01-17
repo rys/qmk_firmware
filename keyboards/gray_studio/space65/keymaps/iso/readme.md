@@ -1,6 +1,6 @@
-# The default keymap for Space65
+# ISO keymap for Space65
 
-Make this firmware with `make gray_studio/space65:default`.
+Make this firmware with `make gray_studio/space65:iso`.
 
 ## Static and Dynamic lighting
 
