@@ -287,7 +287,6 @@ void apply_led_state(void) {
                 rgblight_sethsv_range(bdg_h, bdg_s, bdg_v, THINK65_LED_RANGE_BADGE);
                 rgblight_sethsv_range(ugl_h, ugl_s, ugl_v, THINK65_LED_RANGE_UNDERGLOW);
             } else {
-                rgblight_enable();
                 rgblight_set_effect_range(THINK65_LED_RANGE_ALL);
             }
             break;
