@@ -39,13 +39,16 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
 }
 
 void led_set_kb(uint8_t usb_led) {
-	// put your keyboard LED indicator (ex: Caps Lock LED) toggling code here
-  if (IS_LED_ON(usb_led, USB_LED_CAPS_LOCK)) {
-    writePinLow(E6);
-  } else {
-    writePinHigh(E6);
-  }
-	led_set_user(usb_led);
+}
+
+// LED indicator for CapsLock and Scroll Lock
+void rgb_matrix_indicators_kb(void) {
+if (host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK)) {
+    rgb_matrix_set_color(62, 0, 0, 255);
+    }
+if (host_keyboard_leds() & (1<<USB_LED_SCROLL_LOCK)) {
+    rgb_matrix_set_color(14, 0, 0, 255);
+}
 }
 
 led_config_t g_led_config = {
