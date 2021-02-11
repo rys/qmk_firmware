@@ -49,5 +49,4 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define DRIVER_LED_TOTAL 88
 #define RGBLED_NUM 88
 #define RGB_MATRIX_KEYPRESSES
-
-
+#define RGBLIGHT_LIMIT_VAL 122
