@@ -53,3 +53,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define RGBLIGHT_VAL_STEP 8
     #define RGBLIGHT_LIMIT_VAL 50
 #endif
+
+/* Enable RGB Light Layers so animations work with caps/scroll lock */
+#define RGBLIGHT_LAYERS
+/* Allow layers to stay on when RGB is toggled off */
+#define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF

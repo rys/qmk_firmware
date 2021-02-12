@@ -44,10 +44,10 @@ void led_set_kb(uint8_t usb_led) {
 // LED indicator for CapsLock and Scroll Lock
 void rgb_matrix_indicators_kb(void) {
 if (host_keyboard_leds() & (1<<USB_LED_CAPS_LOCK)) {
-    rgb_matrix_set_color(62, 0, 0, 255);
+    rgb_matrix_set_color(62, 255,255, 255);
     }
 if (host_keyboard_leds() & (1<<USB_LED_SCROLL_LOCK)) {
-    rgb_matrix_set_color(14, 0, 0, 255);
+    rgb_matrix_set_color(14, 255, 255, 255);
 }
 }
 
@@ -69,10 +69,10 @@ led_config_t g_led_config = {
     {0,64},	{14,64},	{28,64},			{71,64},				{127,64},	{141,64},	{155,64},	{169,64},	{184,64},		{212,64},	{226,64}
 },
 {
-    4,		4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,
+    4,		4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	1,	4,
     4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,
     4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,
-    4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,
+    1,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,
     4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,	4,			4,
     4,	4,	4,			4,				4,	4,	4,	4,	4,		4,	4
 }
