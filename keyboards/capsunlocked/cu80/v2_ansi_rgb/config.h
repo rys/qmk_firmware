@@ -21,10 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 /* USB Device descriptor parameter */
 #define VENDOR_ID       0x4355
-#define PRODUCT_ID      0x0081
+#define PRODUCT_ID      0x0082
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    CapsUnlocked
-#define PRODUCT         CU80 v2 ANSI
+#define PRODUCT         CU80 v2 ANSI RGB
 
 /* key matrix size */
 #define MATRIX_ROWS 6
@@ -45,16 +45,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LOCKING_RESYNC_ENABLE
 
 #define RGB_DI_PIN E6
-#ifdef RGB_DI_PIN
-    #define RGBLIGHT_ANIMATIONS
-    #define RGBLED_NUM 87
-    #define RGBLIGHT_HUE_STEP 8
-    #define RGBLIGHT_SAT_STEP 8
-    #define RGBLIGHT_VAL_STEP 8
-    #define RGBLIGHT_LIMIT_VAL 50
-#endif
+// The number of LEDs connected
+#define DRIVER_LED_TOTAL 87
+#define RGBLED_NUM 87
+#define RGB_MATRIX_KEYPRESSES
+#define RGBLIGHT_LIMIT_VAL 122
 
-/* Enable RGB Light Layers so animations work with caps/scroll lock */
-#define RGBLIGHT_LAYERS
-/* Allow layers to stay on when RGB is toggled off */
-#define RGBLIGHT_LAYERS_OVERRIDE_RGB_OFF
+
