@@ -1,0 +1,14 @@
+{
+    "keyboard_name": "CU1",
+    "manufacturer": "CapsUnlocked",
+    "maintainer": "rys",
+    "width": 1,
+    "height": 1,
+    "layouts": {
+        "LAYOUT_ortho_1x1": {
+            "layout": [
+                {"x":0, "y":0}
+            ]
+        }
+    }
+}
